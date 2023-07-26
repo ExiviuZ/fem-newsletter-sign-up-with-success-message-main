@@ -34,8 +34,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/ExiviuZ/fem-newsletter-sign-up-with-success-message-main)
-- Live Site URL: [Add live site URL here](https://exiviuz.github.io/fem-newsletter-sign-up-with-success-message-main)
+- Solution URL: (https://github.com/ExiviuZ/fem-newsletter-sign-up-with-success-message-main)
+- Live Site URL: (https://exiviuz.github.io/fem-newsletter-sign-up-with-success-message-main)
 
 ## My process
 
