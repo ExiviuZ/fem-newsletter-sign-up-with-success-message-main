@@ -21,17 +21,214 @@
 
 *,*::before, *:after{
     box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+    font-family: robotoRegular;
 }
 
-html{
+input,html{
     font-size:var(--fs);
 }
 
 img{
     width: 100%;
+    display: inline;
 }
 
 body {
-    margin: 0;
+    display: flex;
+    background-color: var(--dark-slate-grey);
+    min-height: 100vh;
     font-family: robotoRegular, sans-serif;
+    color: var(--charcoal-grey);
+    &.active{
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+    }
 }
+
+.main {
+    background-color: var(--white);
+    margin: auto;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+.container{
+    background-color: var(--white);
+    input, button {
+        border-radius: 10px;
+        padding: 1rem 1.5rem;
+    }
+    button {
+        cursor: pointer;
+        font-size: 14px;
+        border: none;
+        background-color: var(--dark-slate-grey);
+        color: var(--white);
+        font-weight: 600;
+    }
+& picture img{
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+}
+&.content{
+    h1,label {
+        font-weight: 900;
+        color: var(--dark-slate-grey);
+    }
+    padding: 1.4rem 2rem;
+    h1{
+        font-size: 2.3rem;
+    }
+    .description {
+        margin-bottom: 1.5rem;
+    }
+    ul{
+        list-style-type: none;
+    }
+    li {
+        display: flex;
+        gap: 1rem;
+        > span {
+            flex: 7%;
+
+        }
+        > p {
+            flex: 93%;
+        }
+    }
+    h1,li{
+        margin-bottom:1rem;
+        margin-top: 1rem;
+    }
+    p,li{
+        line-height: 1.4;
+    }
+   form {
+    label,input,button {
+        width: 100%;
+        display: block;
+    }
+    label{
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 0.75rem;
+    }
+    input {
+        border: 1px solid var(--grey);
+        margin-bottom: 1rem;
+    }
+    .form-control{
+        position: relative;
+        small{
+            position: absolute;
+            color: var(--primary-color);
+            right: 0;
+            top: 0;
+                visibility: hidden;
+                opacity: 0;
+                transition: opacity 0.25s linear;
+        }
+        &.error{
+            input {
+                border-color:hsl(4, 100%, 57%);
+                background-color: hsl(4, 100%, 87%);
+                    color: var(--primary-color);
+                &::placeholder{
+                    color: var(--primary-color);
+
+                }
+            }
+            small {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+        &.success{
+            
+        }
+    }
+   }
+}
+&.success {
+    width: 100%;
+    padding: 1rem 2rem;
+    display: none;
+    align-items: start;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-direction: column;
+    p{
+        line-height:1.4;
+    }
+    .email-span {
+        color: var(--dark-slate-grey);
+        font-weight: 600;
+    }
+    h2{
+        font-size: 34px;
+    }
+    img {
+        width: 50px;
+    }
+    .dismiss-button{
+        width: 100%;
+        transition: background-color 0.25s ease-in-out;
+        &:hover{
+            cursor: pointer;
+            background-color: var(--primary-color);
+        }
+    }
+}
+}
+
+  
+  /* Media query for mobile devices */
+  @media (max-width: 700px) {
+        .main {
+            width: 75%;
+            flex-direction:column;
+        }
+        
+  }
+  @media (max-width: 500px) {
+    .main {
+        border-radius: 0;
+        height: 100vh;
+        padding: 0;
+        width: 100%;
+    }
+    .container picture img{
+        border-radius: 0px;
+    }
+  }
+   /* Media query for desktop devices */
+   @media (min-width: 451px) {
+    .container.success {
+      width:400px; /* Takes up 25% width on desktop */
+      padding: 4rem;
+      border-radius: 30px;
+      max-width: 100%; /* Optional: Set a maximum width for larger screens */
+    } 
+  }
+   @media (max-width: 450px) {
+    
+    .container.success {
+       height: 100vh;
+      width: 100%; /* Takes up 25% width on desktop */
+      padding: 1rem;
+    border-radius: 0px;
+    } 
+  }
+ 
+  
+ 
+  

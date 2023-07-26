@@ -12,65 +12,149 @@
   <style>
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
+    .loader {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: none;
+  margin:3px auto;
+  position: relative;
+  color: #FFF;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 2px,  -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+  }
+}
+    
   </style>
 </head>
 <body>
 
-  <main>
-<section>
-  <img src="./assets/images/illustration-sign-up-mobile.svg" alt="">
-  <!-- <img src="./assets/images/illustration-sign-up-desktop.svg" alt=""> -->
+  <main class="main">
+<section class="container image">
+  <picture>
+    <!-- Source for larger viewports (e.g., desktop devices) -->
+    <source media="(min-width: 701px)" srcset="./assets/images/illustration-sign-up-desktop.svg">
+    
+    <!-- Source for smaller viewports (e.g., mobile devices) -->
+    <source media="(max-width: 700px)" srcset="./assets/images/illustration-sign-up-mobile.svg">    
+    
+    <!-- Fallback image for browsers that don't support the <picture> element -->
+    <img src="./assets/images/illustration-sign-up-desktop.svg" alt="Description of the image">
+  </picture>
+  
 </section>
-<section>
+<section class="container content">
   <h1>Stay updated!</h1>
-  <p>Join 60,000+ product managers receiving monthly updates on:</p>
+  <p class="description">Join 60,000+ product managers receiving monthly updates on:</p>
 
   <ul>
-    <li>Product discovery and building what matters</li>
-    <li>Measuring to ensure updates are a success</li>
-    <li>And much more!</li>
+    <li> <span><img src="./assets/images/icon-list.svg" alt=""></span>  <p>Product discovery and building what matters</p></li>
+    <li> <span><img src="./assets/images/icon-list.svg" alt=""></span> <p>Measuring to ensure updates are a success</p></li>
+    <li> <span><img src="./assets/images/icon-list.svg" alt=""></span> <p>And much more!</p></li>
   </ul>
+  
 
-  <form>
-    <label for="email-input">Email:</label>
-    <input type="email" id="email-input" name="email" required>
-    <button type="submit">Subscribe to monthly newsletter</button>
+  <form id="form">
+    <div class="form-control">
+      <label for="email-input">Email address</label>
+      <input type="email" id="email" placeholder="email@company.com">
+      <small>Invalid Email</small>
+    </div>
+    <button class="submit-button" type="submit"><span class="subscribe">Subscribe to monthly newsletter</span> <span class="loader"></span></button>
   </form>
   
 </section>
   </main>
 
-  <!-- Sign-up form start -->
+  <section class="container success">
+    <img src="./assets/images/icon-success.svg" alt="">
+<h2>Thanks for subscribing!</h2>
+<p> A confirmation email has been sent to <span class="email-span">ash@loremcompany.com</span>. 
+  Please open it and click the button inside to confirm your subscription.</p>
+  <button class="dismiss-button">Dismiss Message</button>
+  </section>
 
-  
-
-  
-
-  
-  
-  
-<!-- 
-  Email address
-  email@company.com
-
-  Subscribe to monthly newsletter -->
-
-  <!-- Sign-up form end -->
-
-  <!-- Success message start -->
-
-  <!-- Thanks for subscribing!
-
-  A confirmation email has been sent to ash@loremcompany.com. 
-  Please open it and click the button inside to confirm your subscription.
-
-  Dismiss message -->
-
-  <!-- Success message end -->
-  
   <!-- <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>. -->
   </div>
+  <script>
+    let email = document.querySelector("#email");
+    let loader = document.querySelector(".loader");
+    let subscribe = document.querySelector(".subscribe");
+    let form = document.querySelector("#form");
+    let emailSpan = document.querySelector('.email-span')
+    var submitBtn = document.querySelector('.submit-button')
+    var dismissBtn = document.querySelector('.dismiss-button')
+    var successContainer = document.querySelector('.container.success')
+    var main = document.querySelector('.main')
+
+
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+        let emailValue = email.value.trim();
+
+        if (emailValue == "") {
+          setErrorFor(email, "Email cannot be blank");
+        } else if (
+          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailValue)
+        ) {
+          setErrorFor(email, "Valid email required");
+        } else {
+          setSuccessFor(email);
+          loader.style.display = 'block'
+          subscribe.style.display = 'none'
+        setTimeout(() => {
+          main.style.display = 'none';
+        successContainer.style.display = 'flex';
+        document.body.classList.add('active')
+        emailSpan.innerText = emailValue
+}, 3000);
+        }
+        
+      });
+
+      function setErrorFor(input, message) {
+        let formControl = input.parentElement;
+        let small = formControl.querySelector("small");
+
+        small.innerText = message;
+
+        formControl.classList.add("error");
+        formControl.classList.remove("success");
+      }
+      function setSuccessFor(input) {
+        let formControl = input.parentElement;
+        formControl.classList.add("success");
+        formControl.classList.remove("error");
+      }
+  
+      dismissBtn.addEventListener('click', e => {
+        main.style.display = 'flex';
+        successContainer.style.display = 'none';
+        document.body.classList.remove('active')
+        emailSpan.innerText = ''
+        email.value=''
+        loader.style.display = 'none'
+        subscribe.style.display = 'block'
+      })
+  </script>
 </body>
 </html>
